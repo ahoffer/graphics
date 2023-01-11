@@ -1,7 +1,7 @@
 package org.example;
 
 public class Surface3D {
-    int xSquareSize = 5, ySquareSize = 5;
+    int xSquareSize = 1, ySquareSize = 1;
     int xGridSize, yGridSize;
     int[][] surfaceElevations = null;
     int[][] surfaceElevationsAverage = null;
