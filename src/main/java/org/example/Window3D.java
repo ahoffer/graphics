@@ -1,146 +1,145 @@
 package org.example;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
-public class IsoTest extends JFrame {
-    IsoTest(){
+public class Window3D extends JFrame {
+    Window3D(){
         JFrame aFrame=new JFrame("Isometric 3D Test");
         int step=50;
-        IsoPanel isoPanel=new IsoPanel();
+        DrawingPanel drawingPanel =new DrawingPanel();
         JButton mode0Button = new JButton("Mode Left");
         mode0Button.addActionListener(new ActionListener() {
                                           public void actionPerformed(ActionEvent ae) {
-                                              isoPanel.iso3D.mode=0;
-                                              isoPanel.repaint();
+                                              drawingPanel.iso3D.mode=0;
+                                              drawingPanel.repaint();
                                           }
                                       }
         );
-        isoPanel.add(mode0Button);
+        drawingPanel.add(mode0Button);
         JButton mode1Button = new JButton("Mode Center");
         mode1Button.addActionListener(new ActionListener() {
                                           public void actionPerformed(ActionEvent ae) {
-                                              isoPanel.iso3D.mode=1;
-                                              isoPanel.repaint();
+                                              drawingPanel.iso3D.mode=1;
+                                              drawingPanel.repaint();
                                           }
                                       }
         );
-        isoPanel.add(mode1Button);
+        drawingPanel.add(mode1Button);
         JButton mode2Button = new JButton("Mode Right");
         mode2Button.addActionListener(new ActionListener() {
                                           public void actionPerformed(ActionEvent ae) {
-                                              isoPanel.iso3D.mode=2;
-                                              isoPanel.repaint();
+                                              drawingPanel.iso3D.mode=2;
+                                              drawingPanel.repaint();
                                           }
                                       }
         );
-        isoPanel.add(mode2Button);
+        drawingPanel.add(mode2Button);
 
         JButton leftButton = new JButton("Left");
         leftButton.addActionListener(new ActionListener() {
                                          public void actionPerformed(ActionEvent ae) {
-                                             isoPanel.originX-=step;
-                                             isoPanel.repaint();
+                                             drawingPanel.originX-=step;
+                                             drawingPanel.repaint();
                                          }
                                      }
         );
-        isoPanel.add(leftButton);
+        drawingPanel.add(leftButton);
         JButton rightButton = new JButton("Right");
         rightButton.addActionListener(new ActionListener() {
                                           public void actionPerformed(ActionEvent ae) {
-                                              isoPanel.originX+=step;
-                                              isoPanel.repaint();
+                                              drawingPanel.originX+=step;
+                                              drawingPanel.repaint();
                                           }
                                       }
         );
-        isoPanel.add(rightButton);
+        drawingPanel.add(rightButton);
         JButton upButton = new JButton("Up");
         upButton.addActionListener(new ActionListener() {
                                        public void actionPerformed(ActionEvent ae) {
-                                           isoPanel.originY-=step;
-                                           isoPanel.repaint();
+                                           drawingPanel.originY-=step;
+                                           drawingPanel.repaint();
                                        }
                                    }
         );
-        isoPanel.add(upButton);
+        drawingPanel.add(upButton);
         JButton downButton = new JButton("Down");
         downButton.addActionListener(new ActionListener() {
                                          public void actionPerformed(ActionEvent ae) {
-                                             isoPanel.originY+=step;
-                                             isoPanel.repaint();
+                                             drawingPanel.originY+=step;
+                                             drawingPanel.repaint();
                                          }
                                      }
         );
-        isoPanel.add(downButton);
+        drawingPanel.add(downButton);
         JButton yIncButton = new JButton("Y+");
         yIncButton.addActionListener(new ActionListener() {
                                          public void actionPerformed(ActionEvent ae) {
-                                             isoPanel.ySkew-=0.1f;
-                                             if(isoPanel.ySkew==0)isoPanel.ySkew=-0.1f;
-                                             isoPanel.repaint();
+                                             drawingPanel.ySkew-=0.1f;
+                                             if(drawingPanel.ySkew==0) drawingPanel.ySkew=-0.1f;
+                                             drawingPanel.repaint();
                                          }
                                      }
         );
-        isoPanel.add(yIncButton);
+        drawingPanel.add(yIncButton);
         JButton yDecButton = new JButton("Y-");
         yDecButton.addActionListener(new ActionListener() {
                                          public void actionPerformed(ActionEvent ae) {
-                                             isoPanel.ySkew+=0.1f;
-                                             if(isoPanel.ySkew==0)isoPanel.ySkew=0.1f;
-                                             isoPanel.repaint();
+                                             drawingPanel.ySkew+=0.1f;
+                                             if(drawingPanel.ySkew==0) drawingPanel.ySkew=0.1f;
+                                             drawingPanel.repaint();
                                          }
                                      }
         );
-        isoPanel.add(yDecButton);
+        drawingPanel.add(yDecButton);
 
         JButton yInc2DButton = new JButton("2D Y+");
         yInc2DButton.addActionListener(new ActionListener() {
                                            public void actionPerformed(ActionEvent ae) {
-                                               isoPanel.iso3D.ySkew-=.1f;
-                                               if(isoPanel.ySkew==0.0f)isoPanel.iso3D.ySkew=-0.1f;
-                                               isoPanel.repaint();
+                                               drawingPanel.iso3D.ySkew-=.1f;
+                                               if(drawingPanel.ySkew==0.0f) drawingPanel.iso3D.ySkew=-0.1f;
+                                               drawingPanel.repaint();
                                            }
                                        }
         );
-        isoPanel.add(yInc2DButton);
+        drawingPanel.add(yInc2DButton);
         JButton yDec2DButton = new JButton("2D Y-");
         yDec2DButton.addActionListener(new ActionListener() {
                                            public void actionPerformed(ActionEvent ae) {
-                                               isoPanel.iso3D.ySkew+=.1f;
-                                               if(isoPanel.ySkew==0.0f)isoPanel.iso3D.ySkew=0.1f;
-                                               isoPanel.repaint();
+                                               drawingPanel.iso3D.ySkew+=.1f;
+                                               if(drawingPanel.ySkew==0.0f) drawingPanel.iso3D.ySkew=0.1f;
+                                               drawingPanel.repaint();
                                            }
                                        }
         );
-        isoPanel.add(yDec2DButton);
+        drawingPanel.add(yDec2DButton);
         JButton zoomInButton = new JButton("Zoom+");
         zoomInButton.addActionListener(new ActionListener() {
                                            public void actionPerformed(ActionEvent ae) {
-                                               isoPanel.surface.xSquareSize-=1;
-                                               isoPanel.surface.ySquareSize-=1;
-                                               if(isoPanel.surface.xSquareSize<=0)isoPanel.surface.xSquareSize=1;
-                                               if(isoPanel.surface.ySquareSize<=0)isoPanel.surface.ySquareSize=1;
-                                               isoPanel.repaint();
+                                               drawingPanel.surface.xSquareSize-=1;
+                                               drawingPanel.surface.ySquareSize-=1;
+                                               if(drawingPanel.surface.xSquareSize<=0) drawingPanel.surface.xSquareSize=1;
+                                               if(drawingPanel.surface.ySquareSize<=0) drawingPanel.surface.ySquareSize=1;
+                                               drawingPanel.repaint();
                                            }
                                        }
         );
-        isoPanel.add(zoomInButton);
+        drawingPanel.add(zoomInButton);
         JButton zoomOutButton = new JButton("Zoom-");
         zoomOutButton.addActionListener(new ActionListener() {
                                             public void actionPerformed(ActionEvent ae) {
-                                                isoPanel.surface.xSquareSize+=1;
-                                                isoPanel.surface.ySquareSize+=1;
-                                                isoPanel.repaint();
+                                                drawingPanel.surface.xSquareSize+=1;
+                                                drawingPanel.surface.ySquareSize+=1;
+                                                drawingPanel.repaint();
                                             }
                                         }
         );
-        isoPanel.add(zoomOutButton);
-        aFrame.add(isoPanel);
+        drawingPanel.add(zoomOutButton);
+        aFrame.add(drawingPanel);
         aFrame.setSize(1000,800);
         aFrame.setDefaultCloseOperation(aFrame.EXIT_ON_CLOSE);
         aFrame.show();
     }
     public static void main(String args[]){
-        new IsoTest();
+        new Window3D();
     }
 }
