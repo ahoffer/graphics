@@ -1,11 +1,12 @@
 package org.example;
+
 import javax.swing.*;
 
 public class Window3D extends JFrame {
-    Window3D(){
-        JFrame aFrame=new JFrame("Isometric 3D Test");
-        int step=50;
-        DrawingPanel drawingPanel =new DrawingPanel();
+    Window3D() {
+        JFrame aFrame = new JFrame("Isometric 3D Test");
+        int step = 50;
+        DrawingPanel drawingPanel = new DrawingPanel();
 
 //        JButton mode0Button = new JButton("Mode Left");
 //        mode0Button.addActionListener(ae -> {
@@ -32,21 +33,21 @@ public class Window3D extends JFrame {
 
         JButton leftButton = new JButton("Left");
         leftButton.addActionListener(ae -> {
-            drawingPanel.originX-=step;
-            drawingPanel.repaint();
-        }
+                    drawingPanel.originX -= step;
+                    drawingPanel.repaint();
+                }
         );
 
         JButton rightButton = new JButton("Right");
         rightButton.addActionListener(ae -> {
-                    drawingPanel.originX+=step;
+                    drawingPanel.originX += step;
                     drawingPanel.repaint();
                 }
         );
 
         JButton upButton = new JButton("Up");
         upButton.addActionListener(ae -> {
-                    drawingPanel.originY-=step;
+                    drawingPanel.originY -= step;
                     drawingPanel.repaint();
                 }
         );
@@ -54,56 +55,56 @@ public class Window3D extends JFrame {
 
         JButton downButton = new JButton("Down");
         downButton.addActionListener(ae -> {
-                    drawingPanel.originY+=step;
+                    drawingPanel.originY += step;
                     drawingPanel.repaint();
                 }
         );
         drawingPanel.add(downButton);
         JButton yIncButton = new JButton("Y-");
         yIncButton.addActionListener(ae -> {
-                    drawingPanel.ySkew-=0.1f;
-                    if(drawingPanel.ySkew==0) drawingPanel.ySkew=-0.1f;
+                    drawingPanel.ySkew -= 0.1f;
+                    if (drawingPanel.ySkew == 0) drawingPanel.ySkew = -0.1f;
                     drawingPanel.repaint();
                 }
         );
         JButton yDecButton = new JButton("Y+");
         yDecButton.addActionListener(ae -> {
-                    drawingPanel.ySkew+=0.1f;
-                    if(drawingPanel.ySkew==0) drawingPanel.ySkew=0.1f;
+                    drawingPanel.ySkew += 0.1f;
+                    if (drawingPanel.ySkew == 0) drawingPanel.ySkew = 0.1f;
                     drawingPanel.repaint();
                 }
         );
 
         JButton yInc2DButton = new JButton("Y Skew+");
         yInc2DButton.addActionListener(ae -> {
-                    drawingPanel.globalVars.ySkew-=.1f;
-                    if(drawingPanel.ySkew==0.0f) drawingPanel.globalVars.ySkew=-0.1f;
-                    System.err.println("Y skew=" + drawingPanel.globalVars.ySkew);
+                    GlobalVars.ySkew -= .1f;
+                    if (drawingPanel.ySkew == 0.0f) GlobalVars.ySkew = -0.1f;
+                    System.err.println("Y skew=" + GlobalVars.ySkew);
                     drawingPanel.repaint();
                 }
         );
         drawingPanel.add(yInc2DButton);
         JButton yDec2DButton = new JButton("Y Skew-");
         yDec2DButton.addActionListener(ae -> {
-                    drawingPanel.globalVars.ySkew+=.1f;
-                    if(drawingPanel.ySkew==0.0f) drawingPanel.globalVars.ySkew=0.1f;
+                    GlobalVars.ySkew += .1f;
+                    if (drawingPanel.ySkew == 0.0f) GlobalVars.ySkew = 0.1f;
                     drawingPanel.repaint();
                 }
         );
         JButton zoomInButton = new JButton("Zoom+");
         zoomInButton.addActionListener(ae -> {
-            drawingPanel.surface.xSquareSize-=1;
-            drawingPanel.surface.ySquareSize-=1;
-            if(drawingPanel.surface.xSquareSize<=0) drawingPanel.surface.xSquareSize=1;
-            if(drawingPanel.surface.ySquareSize<=0) drawingPanel.surface.ySquareSize=1;
-            drawingPanel.repaint();
+                    drawingPanel.surface.xSquareSize -= 1;
+                    drawingPanel.surface.ySquareSize -= 1;
+                    if (drawingPanel.surface.xSquareSize <= 0) drawingPanel.surface.xSquareSize = 1;
+                    if (drawingPanel.surface.ySquareSize <= 0) drawingPanel.surface.ySquareSize = 1;
+                    drawingPanel.repaint();
                 }
         );
         JButton zoomOutButton = new JButton("Zoom-");
         zoomOutButton.addActionListener(ae -> {
-            drawingPanel.surface.xSquareSize+=1;
-            drawingPanel.surface.ySquareSize+=1;
-            drawingPanel.repaint();
+                    drawingPanel.surface.xSquareSize += 1;
+                    drawingPanel.surface.ySquareSize += 1;
+                    drawingPanel.repaint();
                 }
         );
 
@@ -117,11 +118,12 @@ public class Window3D extends JFrame {
         drawingPanel.add(zoomOutButton);
 
         aFrame.add(drawingPanel);
-        aFrame.setSize(1600,1200);
+        aFrame.setSize(1600, 1200);
         aFrame.setDefaultCloseOperation(aFrame.EXIT_ON_CLOSE);
         aFrame.show();
     }
-    public static void main(String args[]){
+
+    public static void main(String[] args) {
         new Window3D();
     }
 }

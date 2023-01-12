@@ -1,12 +1,12 @@
 package org.example;
 
-public class Surface3D {
+public class Noise3D {
     int[][] surfaceElevations = null;
     int[][] surfaceElevationsAverage = null;
     int xGridSize, yGridSize;
     int xSquareSize = 10, ySquareSize = 10;
 
-    Surface3D(int xGridSize, int yGridSize, int nRandomHeights, int minHeight, int maxHeight) {
+    Noise3D(int xGridSize, int yGridSize, int nRandomHeights, int minHeight, int maxHeight) {
         this.xGridSize = xGridSize;
         this.yGridSize = yGridSize;
         surfaceElevations = new int[xGridSize][yGridSize];
