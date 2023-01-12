@@ -3,62 +3,42 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 
+import static org.example.Window3D.WIN_HEIGHT;
+import static org.example.Window3D.WIN_WIDTH;
+
 public class DrawingPanel extends JPanel {
-    public GlobalVars globalVars = new GlobalVars();
-    public int originX = 0;
-    public int originY = 500;
+
     public float ySkew = 1.0f;
-    Surface3D surface;
+    SurfaceModel surface;
     private Graphics grxContext;
-    private int x;
-    private int xs;
-    private int y;
-    private int ys;
 
-    public DrawingPanel() {
-        x = 2;
-        y = 1;
-        xs = 50;
-        ys = 50;
-        surface = new Surface3D(50, 50, 150, -300, 300);
+
+    public DrawingPanel(SurfaceModel surface) {
+        this.surface = surface;
     }
 
-    private void drawGrid() {
-        Point2D point2;
-        Point2D point1;
-        point1 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y) * ySkew), y * ys).transformToIso(globalVars);
-        point2 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y + 1) * ySkew), (y + 1) * ys).transformToIso(globalVars);
-        grxContext.drawLine(point1.x + originX, point1.y + originY, point2.x + originX, point2.y + originY);
-//        System.err.printf("y-line from %s -> %s%n", point1, point2);
-    }
 
-    private void drawNoise() {
+    private void drawNoise(int x, int y) {
         Point2D point1;
         Point2D point2;
-        point1 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y) * ySkew), y * ys).transformToIso(globalVars);
-        point2 = new Point3D((x + 1) * xs, (int) (surface.getElevationAvg(x + 1, y) * ySkew), y * ys).transformToIso(globalVars);
-        grxContext.drawLine(point1.x + originX, point1.y + originY, point2.x + originX, point2.y + originY);
+        int xs = surface.getSquareSize();
+        int ys = surface.getSquareSize();
+        point1 = new Point3D(x * xs, (int) (surface.getElevation(x, y) * ySkew), y * ys).transformToIso();
+        point2 = new Point3D((x + 1) * xs, (int) (surface.getElevation(x + 1, y) * ySkew), y * ys).transformToIso();
+        grxContext.drawLine(point1.x + surface.getOriginX(), point1.y + surface.getOriginY(), point2.x + surface.getOriginX(), point2.y + surface.getOriginY());
 //        System.err.printf("noise line from %s -> %s%n", point1, point2);
     }
 
     public void paintComponent(Graphics g) {
         this.grxContext = g;
         g.setColor(Color.black);
-        grxContext.fillRect(0, 0, 1000, 1000);
-        grxContext.setColor(Color.blue);
-        Point2D point1 = null;
-        Point2D point2 = null;
-        xs = surface.xSquareSize;
-        ys = surface.ySquareSize;
+        grxContext.fillRect(0, 0, WIN_WIDTH, WIN_HEIGHT);
         grxContext.setColor(Color.green);
-        for (y = 0; y < surface.yGridSize; y++)
-            for (x = 0; x < surface.xGridSize; x++) {
-                if (x < surface.xGridSize - 1) {
-                    drawNoise();
+        for (int y = 0; y < surface.getYgridSize(); y++)
+            for (int x = 0; x < surface.getXgridSize(); x++) {
+                if (x < surface.getXgridSize() - 1) {
+                    drawNoise(x, y);
                 }
-//                if (y < surface.yGridSize - 1) {
-//                    drawGrid();
-//                }
             }
     }
 }

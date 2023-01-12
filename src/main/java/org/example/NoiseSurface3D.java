@@ -1,12 +1,11 @@
 package org.example;
 
-public class Surface3D {
+public class NoiseSurface3D   {
+    PerlinNoise perlinNoise = new PerlinNoise(3);
     int[][] surfaceElevations = null;
-    int[][] surfaceElevationsAverage = null;
     int xGridSize, yGridSize;
-    int xSquareSize = 10, ySquareSize = 10;
 
-    Surface3D(int xGridSize, int yGridSize, int nRandomHeights, int minHeight, int maxHeight) {
+    NoiseSurface3D(int xGridSize, int yGridSize, int nRandomHeights, int minHeight, int maxHeight) {
         this.xGridSize = xGridSize;
         this.yGridSize = yGridSize;
         surfaceElevations = new int[xGridSize][yGridSize];
@@ -16,12 +15,10 @@ public class Surface3D {
             randomY = (int) (Math.random() * (yGridSize - 2) + 1);
             setElevation(randomX, randomY, randomElevation(minHeight, maxHeight));
         }
-        surfaceElevationsAverage = new int[xGridSize][yGridSize];
         for (int i = 0; i < 2; i++) {
             for (int y = 1; y < yGridSize - 1; y++)
                 for (int x = 1; x < xGridSize - 1; x++)
-                    setElevationAvg(x, y, average(x, y));
-            surfaceElevations = surfaceElevationsAverage;
+                    setElevation(x, y, average(x, y));
         }
     }
 
@@ -42,9 +39,6 @@ public class Surface3D {
         return surfaceElevations[y][x];
     }
 
-    public int getElevationAvg(int x, int y) {
-        return surfaceElevations[y][x];
-    }
 
     public int randomElevation(int minHeight, int maxHeight) {
         return (int) (Math.random() * (maxHeight - minHeight) + minHeight);
@@ -52,9 +46,5 @@ public class Surface3D {
 
     public void setElevation(int x, int y, int elevation) {
         surfaceElevations[y][x] = elevation;
-    }
-
-    public void setElevationAvg(int x, int y, int elevation) {
-        surfaceElevationsAverage[y][x] = elevation;
     }
 }

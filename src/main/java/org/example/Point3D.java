@@ -20,16 +20,16 @@ public class Point3D {
         return String.format("(%d,%d,%d", x, y, z);
     }
 
-    public Point2D transformToIso(GlobalVars globalVars) {
-        switch (globalVars.mode) {
-            case LEFT_ISO:
-                return new Point2D(x + z, (int) (((-y) + z) * GlobalVars.ySkew));
+    public Point2D transformToIso() {
+        switch (GlobalVars.mode) {
+//            case LEFT_ISO:
+//                return new Point2D(x + z, (int) (((-y) + z) * GlobalVars.ySkew));
             case CENTER_ISO:
-                return new Point2D(x + z, (int) (((-y) + z - x) * GlobalVars.ySkew));
-            case RIGHT_ISO:
-                return new Point2D(x - z, (int) (((-y) + z) * GlobalVars.ySkew));
+            return new Point2D(x + z, (int) (((-y) + z - x) * GlobalVars.ySkew));
+//            case RIGHT_ISO:
+//                return new Point2D(x - z, (int) (((-y) + z) * GlobalVars.ySkew));
             default:
-                throw new RuntimeException("Invalid Transformation Mode! [" + globalVars.mode + "]?");
+                throw new RuntimeException("Invalid Transformation Mode!");
         }
     }
 }

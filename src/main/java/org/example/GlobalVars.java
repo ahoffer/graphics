@@ -5,7 +5,8 @@ public class GlobalVars {
     public static final int LEFT_ISO = 0;
     public static final int RIGHT_ISO = 2;
     public static float ySkew = 0.5f;
-    int mode = 1;
-    public GlobalVars() {
+    public static int mode = 1;
+
+    private GlobalVars() {
     }
 }
