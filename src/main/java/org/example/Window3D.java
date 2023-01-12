@@ -32,16 +32,17 @@ public class Window3D extends JFrame {
 
         JButton upButton = new JButton("Up");
         upButton.addActionListener(ae -> {
-                    surface.incOriginY(translationStep);
+                    surface.decOriginY(translationStep);
                     drawingPanel.repaint();
                 }
         );
         drawingPanel.add(upButton);
 
         JButton downButton = new JButton("Down");
+
+
         downButton.addActionListener(ae -> {
-                    drawingPanel.ySkew -= 0.1f;
-                    if (drawingPanel.ySkew == 0) drawingPanel.ySkew = -0.1f;
+                   surface.incOriginY(translationStep);
                     drawingPanel.repaint();
                 }
         );
