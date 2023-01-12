@@ -1,8 +1,8 @@
 package org.example;
 
-import static org.example.Iso3D.CENTER_ISO;
-import static org.example.Iso3D.LEFT_ISO;
-import static org.example.Iso3D.RIGHT_ISO;
+import static org.example.GlobalVars.CENTER_ISO;
+import static org.example.GlobalVars.LEFT_ISO;
+import static org.example.GlobalVars.RIGHT_ISO;
 
 public class Point3D {
     int x = 0;
@@ -19,16 +19,16 @@ public class Point3D {
         return String.format("(%d,%d,%d", x, y, z);
     }
 
-    public Point2D transform3D(Iso3D iso3D) {
-        switch (iso3D.mode) {
+    public Point2D transform3D(GlobalVars globalVars) {
+        switch (globalVars.mode) {
             case LEFT_ISO:
-                return new Point2D(x + z, (int) (((-y) + z) * Iso3D.ySkew));
+                return new Point2D(x + z, (int) (((-y) + z) * GlobalVars.ySkew));
             case CENTER_ISO:
-                return new Point2D(x + z, (int) (((-y) + z - x) * Iso3D.ySkew));
+                return new Point2D(x + z, (int) (((-y) + z - x) * GlobalVars.ySkew));
             case RIGHT_ISO:
-                return new Point2D(x - z, (int) (((-y) + z) * Iso3D.ySkew));
+                return new Point2D(x - z, (int) (((-y) + z) * GlobalVars.ySkew));
             default:
-                throw new RuntimeException("Invalid Transformation Mode! [" + iso3D.mode + "]?");
+                throw new RuntimeException("Invalid Transformation Mode! [" + globalVars.mode + "]?");
         }
     }
 }

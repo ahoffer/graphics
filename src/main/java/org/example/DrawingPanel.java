@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DrawingPanel extends JPanel {
-    public Iso3D iso3D = new Iso3D();
+    public GlobalVars globalVars = new GlobalVars();
     public int originX = 0;
-    public int originY = 0;
+    public int originY = 500;
     public float ySkew = 1.0f;
     Surface3D surface;
     private Graphics grxContext;
@@ -26,19 +26,19 @@ public class DrawingPanel extends JPanel {
     private void drawGrid() {
         Point2D point2;
         Point2D point1;
-        point1 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y) * ySkew), y * ys).transform3D(iso3D);
-        point2 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y + 1) * ySkew), (y + 1) * ys).transform3D(iso3D);
+        point1 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y) * ySkew), y * ys).transform3D(globalVars);
+        point2 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y + 1) * ySkew), (y + 1) * ys).transform3D(globalVars);
         grxContext.drawLine(point1.x + originX, point1.y + originY, point2.x + originX, point2.y + originY);
-        System.err.printf("y-line from %s -> %s%n", point1, point2);
+//        System.err.printf("y-line from %s -> %s%n", point1, point2);
     }
 
     private void drawNoise() {
         Point2D point1;
         Point2D point2;
-        point1 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y) * ySkew), y * ys).transform3D(iso3D);
-        point2 = new Point3D((x + 1) * xs, (int) (surface.getElevationAvg(x + 1, y) * ySkew), y * ys).transform3D(iso3D);
+        point1 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y) * ySkew), y * ys).transform3D(globalVars);
+        point2 = new Point3D((x + 1) * xs, (int) (surface.getElevationAvg(x + 1, y) * ySkew), y * ys).transform3D(globalVars);
         grxContext.drawLine(point1.x + originX, point1.y + originY, point2.x + originX, point2.y + originY);
-        System.err.printf("noise line from %s -> %s%n", point1, point2);
+//        System.err.printf("noise line from %s -> %s%n", point1, point2);
     }
 
     public void paintComponent(Graphics g) {

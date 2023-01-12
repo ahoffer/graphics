@@ -1,6 +1,5 @@
 package org.example;
 import javax.swing.*;
-import java.awt.event.*;
 
 public class Window3D extends JFrame {
     Window3D(){
@@ -60,14 +59,14 @@ public class Window3D extends JFrame {
                 }
         );
         drawingPanel.add(downButton);
-        JButton yIncButton = new JButton("Y+");
+        JButton yIncButton = new JButton("Y-");
         yIncButton.addActionListener(ae -> {
                     drawingPanel.ySkew-=0.1f;
                     if(drawingPanel.ySkew==0) drawingPanel.ySkew=-0.1f;
                     drawingPanel.repaint();
                 }
         );
-        JButton yDecButton = new JButton("Y-");
+        JButton yDecButton = new JButton("Y+");
         yDecButton.addActionListener(ae -> {
                     drawingPanel.ySkew+=0.1f;
                     if(drawingPanel.ySkew==0) drawingPanel.ySkew=0.1f;
@@ -75,18 +74,19 @@ public class Window3D extends JFrame {
                 }
         );
 
-        JButton yInc2DButton = new JButton("2D Y+");
+        JButton yInc2DButton = new JButton("Y Skew+");
         yInc2DButton.addActionListener(ae -> {
-                    drawingPanel.iso3D.ySkew-=.1f;
-                    if(drawingPanel.ySkew==0.0f) drawingPanel.iso3D.ySkew=-0.1f;
+                    drawingPanel.globalVars.ySkew-=.1f;
+                    if(drawingPanel.ySkew==0.0f) drawingPanel.globalVars.ySkew=-0.1f;
+                    System.err.println("Y skew=" + drawingPanel.globalVars.ySkew);
                     drawingPanel.repaint();
                 }
         );
         drawingPanel.add(yInc2DButton);
-        JButton yDec2DButton = new JButton("2D Y-");
+        JButton yDec2DButton = new JButton("Y Skew-");
         yDec2DButton.addActionListener(ae -> {
-                    drawingPanel.iso3D.ySkew+=.1f;
-                    if(drawingPanel.ySkew==0.0f) drawingPanel.iso3D.ySkew=0.1f;
+                    drawingPanel.globalVars.ySkew+=.1f;
+                    if(drawingPanel.ySkew==0.0f) drawingPanel.globalVars.ySkew=0.1f;
                     drawingPanel.repaint();
                 }
         );
