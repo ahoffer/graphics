@@ -19,7 +19,7 @@ public class Point3D {
         return String.format("(%d,%d,%d", x, y, z);
     }
 
-    public Point2D transform3D(GlobalVars globalVars) {
+    public Point2D transformToIso(GlobalVars globalVars) {
         switch (globalVars.mode) {
             case LEFT_ISO:
                 return new Point2D(x + z, (int) (((-y) + z) * GlobalVars.ySkew));

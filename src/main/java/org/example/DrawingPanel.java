@@ -26,8 +26,8 @@ public class DrawingPanel extends JPanel {
     private void drawGrid() {
         Point2D point2;
         Point2D point1;
-        point1 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y) * ySkew), y * ys).transform3D(globalVars);
-        point2 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y + 1) * ySkew), (y + 1) * ys).transform3D(globalVars);
+        point1 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y) * ySkew), y * ys).transformToIso(globalVars);
+        point2 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y + 1) * ySkew), (y + 1) * ys).transformToIso(globalVars);
         grxContext.drawLine(point1.x + originX, point1.y + originY, point2.x + originX, point2.y + originY);
 //        System.err.printf("y-line from %s -> %s%n", point1, point2);
     }
@@ -35,8 +35,8 @@ public class DrawingPanel extends JPanel {
     private void drawNoise() {
         Point2D point1;
         Point2D point2;
-        point1 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y) * ySkew), y * ys).transform3D(globalVars);
-        point2 = new Point3D((x + 1) * xs, (int) (surface.getElevationAvg(x + 1, y) * ySkew), y * ys).transform3D(globalVars);
+        point1 = new Point3D(x * xs, (int) (surface.getElevationAvg(x, y) * ySkew), y * ys).transformToIso(globalVars);
+        point2 = new Point3D((x + 1) * xs, (int) (surface.getElevationAvg(x + 1, y) * ySkew), y * ys).transformToIso(globalVars);
         grxContext.drawLine(point1.x + originX, point1.y + originY, point2.x + originX, point2.y + originY);
 //        System.err.printf("noise line from %s -> %s%n", point1, point2);
     }
