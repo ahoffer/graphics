@@ -4,51 +4,29 @@ import javax.swing.*;
 
 public class Window3D extends JFrame {
 
-    public static final int WIN_HEIGHT = 1200;
-    public static final int WIN_WIDTH = 1600;
-    final double elevationScaleStep = 0.3;
-    boolean DEBUG = true;
+    final JFrame frame;
+    boolean DEBUG;
+    double elevationScaleStep;
     int squareSizeStep;
     SurfaceModel surface;
     int translationStep;
     View view;
+    int windowHeight;
+    int windowWidth;
 
     Window3D() {
+        DEBUG = true;
+        windowWidth = 1024;
+        windowHeight = 768;
         translationStep = 50;
         squareSizeStep = 1;
-        JFrame aFrame = new JFrame("Isometric 3D Test");
+        elevationScaleStep = 0.3;
         surface = new RandomSurfaceModel(50, 50, 13);
-        view = new View(surface, WIN_WIDTH, WIN_HEIGHT);
-        int amountTranslateOriginToCenterObjectHorizontally = surface.getSquareSize() * surface.getXgridSize();
-        view.setTranslateX(WIN_WIDTH / 2 - amountTranslateOriginToCenterObjectHorizontally);
-        view.setTranslateY(WIN_HEIGHT / 2);
-
-        JButton leftButton = createButton("Left", this::translateLeft);
-        JButton rightButton = createButton("Right", this::translateRight);
-        JButton upButton = createButton("Up", this::translateUp);
-        JButton downButton = createButton("Down", this::translateDown);
-        JButton yDecButton = createButton("Scale Down", this::adjustElevationDown);
-        JButton yIncButton = createButton("Scale Up", this::adjustElevationUp);
-        JButton yInc2DButton = createButton("Rotate +", this::rotatePlus);
-        JButton yDec2DButton = createButton("Rotate -", this::rotateMinus);
-        JButton zoomInButton = createButton("Zoom+", this::zoomIn);
-        JButton zoomOutButton = createButton("Zoom-", this::zoomOut);
-
-        view.add(leftButton);
-        view.add(rightButton);
-        view.add(upButton);
-        view.add(downButton);
-        view.add(yDecButton);
-        view.add(yIncButton);
-        view.add(yDec2DButton);
-        view.add(yInc2DButton);
-        view.add(zoomOutButton);
-        view.add(zoomInButton);
-
-        aFrame.add(view);
-        aFrame.setSize(WIN_WIDTH, WIN_HEIGHT);
-        aFrame.setDefaultCloseOperation(aFrame.EXIT_ON_CLOSE);
-        aFrame.setVisible(true);
+        view = new View(surface, windowWidth, windowHeight);
+        frame = new JFrame("Isometric 3D Test");
+        centerObject();
+        setupButtons();
+        openWindow();
     }
 
     public static void main(String[] args) {
@@ -65,6 +43,12 @@ public class Window3D extends JFrame {
         debugPrintln("Drawing Panel Y Skew=" + view.elevationScalar());
     }
 
+    void centerObject() {
+        int amountTranslateOriginToCenterObjectHorizontally = surface.getSquareSize() * surface.getXgridSize();
+        view.setTranslateX(windowWidth / 2 - amountTranslateOriginToCenterObjectHorizontally);
+        view.setTranslateY(windowHeight / 2);
+    }
+
     JButton createButton(String name, Runnable callback) {
         JButton button = new JButton(name);
         button.addActionListener((ae) -> {
@@ -78,6 +62,12 @@ public class Window3D extends JFrame {
         if (DEBUG) System.err.println(msg);
     }
 
+    void openWindow() {
+        frame.setSize(windowWidth, windowHeight);
+        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
     void rotateMinus() {
         GlobalVars.ySkew -= .1f;
         if (view.elevationScalar() == 0.0f) GlobalVars.ySkew = 0.1f;
@@ -89,6 +79,30 @@ public class Window3D extends JFrame {
         if (view.elevationScalar() == 0.0f) GlobalVars.ySkew = -0.1f;
         debugPrintln("Global Panel Y Skew=" + GlobalVars.ySkew);
         view.repaint();
+    }
+
+    void setupButtons() {
+        JButton leftButton = createButton("Left", this::translateLeft);
+        JButton rightButton = createButton("Right", this::translateRight);
+        JButton upButton = createButton("Up", this::translateUp);
+        JButton downButton = createButton("Down", this::translateDown);
+        JButton yDecButton = createButton("Scale Down", this::adjustElevationDown);
+        JButton yIncButton = createButton("Scale Up", this::adjustElevationUp);
+        JButton yInc2DButton = createButton("Rotate +", this::rotatePlus);
+        JButton yDec2DButton = createButton("Rotate -", this::rotateMinus);
+        JButton zoomInButton = createButton("Zoom+", this::zoomIn);
+        JButton zoomOutButton = createButton("Zoom-", this::zoomOut);
+        view.add(leftButton);
+        view.add(rightButton);
+        view.add(upButton);
+        view.add(downButton);
+        view.add(yDecButton);
+        view.add(yIncButton);
+        view.add(yDec2DButton);
+        view.add(yInc2DButton);
+        view.add(zoomOutButton);
+        view.add(zoomInButton);
+        frame.add(view);
     }
 
     void translateDown() {
