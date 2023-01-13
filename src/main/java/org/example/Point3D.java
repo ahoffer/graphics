@@ -1,7 +1,5 @@
 package org.example;
 
-import static org.example.GlobalVars.CENTER_ISO;
-
 public class Point3D {
     int x = 0;
     int y = 0;
@@ -18,14 +16,14 @@ public class Point3D {
         return String.format("(%d,%d,%d", x, y, z);
     }
 
-    public Point2D transformToIso() {
+    public Point2D transformToIso(double ySkew) {
         //            case LEFT_ISO:
         //                return new Point2D(x + z, (int) (((-y) + z) * GlobalVars.ySkew));
-        if (GlobalVars.mode == CENTER_ISO) {
-            return new Point2D(x + z, (int) (((-y) + z - x) * GlobalVars.ySkew));
+       // if (GlobalVars.mode == CENTER_ISO) {
+            return new Point2D(x + z, (int) (((-y) + z - x) * ySkew));
 //            case RIGHT_ISO:
 //                return new Point2D(x - z, (int) (((-y) + z) * GlobalVars.ySkew));
-        }
-        throw new RuntimeException("Invalid Transformation Mode!");
+     //   }
+      //  throw new RuntimeException("Invalid Transformation Mode!");
     }
 }

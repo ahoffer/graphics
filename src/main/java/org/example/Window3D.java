@@ -7,6 +7,7 @@ public class Window3D extends JFrame {
     final JFrame frame;
     boolean DEBUG;
     double elevationScaleStep;
+    int isoMode;
     int squareSizeStep;
     SurfaceModel surface;
     int translationStep;
@@ -15,6 +16,7 @@ public class Window3D extends JFrame {
     int windowWidth;
 
     Window3D() {
+        isoMode = 1;
         DEBUG = true;
         windowWidth = 1024;
         windowHeight = 768;
@@ -69,16 +71,13 @@ public class Window3D extends JFrame {
     }
 
     void rotateMinus() {
-        GlobalVars.ySkew -= .1f;
-        if (view.elevationScalar() == 0.0f) GlobalVars.ySkew = 0.1f;
-        debugPrintln("Global Skew Y Skew=" + GlobalVars.ySkew);
+        view.adjustYskew(0.1);
+        debugPrintln("Global Skew Y Skew=" + view.getySkew());
     }
 
     void rotatePlus() {
-        GlobalVars.ySkew += .1f;
-        if (view.elevationScalar() == 0.0f) GlobalVars.ySkew = -0.1f;
-        debugPrintln("Global Panel Y Skew=" + GlobalVars.ySkew);
-        view.repaint();
+        view.adjustYskew(0.1);
+        debugPrintln("Global Panel Y Skew=" + view.getySkew());
     }
 
     void setupButtons() {
