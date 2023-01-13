@@ -25,7 +25,7 @@ public class Window3D extends JFrame {
 
         JButton rightButton = new JButton("Right");
         rightButton.addActionListener(ae -> {
-                    surface.incOriginY(translationStep);
+                    surface.incOriginX(translationStep);
                     drawingPanel.repaint();
                 }
         );
@@ -42,7 +42,7 @@ public class Window3D extends JFrame {
 
 
         downButton.addActionListener(ae -> {
-                   surface.incOriginY(translationStep);
+                    surface.incOriginY(translationStep);
                     drawingPanel.repaint();
                 }
         );

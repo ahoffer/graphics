@@ -1,6 +1,5 @@
 package org.example;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class RandomSurfaceModel extends SurfaceModel {
@@ -24,9 +23,7 @@ public class RandomSurfaceModel extends SurfaceModel {
 //            for (int x = 1; x < getXgridSize() - 2; x++) {
 //                System.err.println(String.format("(%d,%d)=%d",x,y,surfaceElevations[y][x]));
 //            }
-        }
-
-
+    }
 
     public int getElevation(int x, int y) {
         return surfaceElevations[y][x];

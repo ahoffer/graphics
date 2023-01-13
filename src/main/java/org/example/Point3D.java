@@ -1,8 +1,6 @@
 package org.example;
 
 import static org.example.GlobalVars.CENTER_ISO;
-import static org.example.GlobalVars.LEFT_ISO;
-import static org.example.GlobalVars.RIGHT_ISO;
 
 public class Point3D {
     int x = 0;
@@ -21,15 +19,13 @@ public class Point3D {
     }
 
     public Point2D transformToIso() {
-        switch (GlobalVars.mode) {
-//            case LEFT_ISO:
-//                return new Point2D(x + z, (int) (((-y) + z) * GlobalVars.ySkew));
-            case CENTER_ISO:
+        //            case LEFT_ISO:
+        //                return new Point2D(x + z, (int) (((-y) + z) * GlobalVars.ySkew));
+        if (GlobalVars.mode == CENTER_ISO) {
             return new Point2D(x + z, (int) (((-y) + z - x) * GlobalVars.ySkew));
 //            case RIGHT_ISO:
 //                return new Point2D(x - z, (int) (((-y) + z) * GlobalVars.ySkew));
-            default:
-                throw new RuntimeException("Invalid Transformation Mode!");
         }
+        throw new RuntimeException("Invalid Transformation Mode!");
     }
 }

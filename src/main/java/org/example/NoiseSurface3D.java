@@ -1,6 +1,6 @@
 package org.example;
 
-public class NoiseSurface3D   {
+public class NoiseSurface3D {
     PerlinNoise perlinNoise = new PerlinNoise(3);
     int[][] surfaceElevations = null;
     int xGridSize, yGridSize;
