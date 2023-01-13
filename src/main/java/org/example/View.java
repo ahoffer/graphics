@@ -7,7 +7,7 @@ import static org.example.Window3D.WIN_HEIGHT;
 import static org.example.Window3D.WIN_WIDTH;
 
 public class View extends JPanel {
-    public float scaleElevation = 1.0f;
+    private float scaleElevation = 1.0f;
     SurfaceModel surface;
     private Graphics grxContext;
     private int translateX = 0;
@@ -18,11 +18,11 @@ public class View extends JPanel {
         this.surface = surface;
     }
 
-    public void decOriginX(int value) {
+    public void translateLeft(int value) {
         setTranslateX(getTranslateX() - value);
     }
 
-    public void decOriginY(int value) {
+    public void translateUp(int value) {
         setTranslateY(getTranslateY() - value);
     }
 
@@ -31,10 +31,14 @@ public class View extends JPanel {
         Point2D point2;
         int xs = surface.getSquareSize();
         int ys = surface.getSquareSize();
-        point1 = new Point3D(x * xs, (int) (surface.getElevation(x, y) * scaleElevation), y * ys).transformToIso();
-        point2 = new Point3D((x + 1) * xs, (int) (surface.getElevation(x + 1, y) * scaleElevation), y * ys).transformToIso();
+        point1 = new Point3D(x * xs, (int) (surface.getElevation(x, y) * getScaleElevation()), y * ys).transformToIso();
+        point2 = new Point3D((x + 1) * xs, (int) (surface.getElevation(x + 1, y) * getScaleElevation()), y * ys).transformToIso();
         grxContext.drawLine(point1.x + getTranslateX(), point1.y + getTranslateY(), point2.x + getTranslateX(), point2.y + getTranslateY());
 //        System.err.printf("noise line from %s -> %s%n", point1, point2);
+    }
+
+    public float getScaleElevation() {
+        return scaleElevation;
     }
 
     public int getTranslateX() {
@@ -45,9 +49,8 @@ public class View extends JPanel {
         return translateY;
     }
 
-    public void incOriginX(int value) {
+    public void translateRight(int value) {
         setTranslateX(getTranslateX() + value);
-
     }
 
     public void incOriginY(int value) {
@@ -65,6 +68,10 @@ public class View extends JPanel {
                     drawNoise(x, y);
                 }
             }
+    }
+
+    public void setScaleElevation(float scaleElevation) {
+        this.scaleElevation = scaleElevation;
     }
 
     public void setTranslateX(int translateX) {
