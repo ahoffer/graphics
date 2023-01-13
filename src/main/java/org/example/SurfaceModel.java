@@ -12,7 +12,6 @@ public abstract class SurfaceModel {
 
     public abstract int getElevation(int x, int y);
 
-
     public int getSquareSize() {
         return squareSize;
     }
@@ -25,18 +24,12 @@ public abstract class SurfaceModel {
         return yGridSize;
     }
 
-
     public void incSquareSize(int value) {
         setSquareSize(getSquareSize() + value);
     }
 
-
-    public void setSquareSize(int size) {
-        if (size <= 0) {
-            squareSize = 1;
-        } else {
-            squareSize = size;
-        }
+    public void setSquareSize(int value) {
+        squareSize = value > 0 ? value : 1;
     }
 
     public void setXgridSize(int value) {
@@ -46,5 +39,4 @@ public abstract class SurfaceModel {
     public void setYgridSize(int value) {
         yGridSize = value;
     }
-
 }

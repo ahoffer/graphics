@@ -6,18 +6,19 @@ public class Window3D extends JFrame {
 
     public static final int WIN_HEIGHT = 1200;
     public static final int WIN_WIDTH = 1600;
-    public static boolean DEBUG = true;
+    final double elevationScaleStep = 0.3;
+    boolean DEBUG = true;
     int squareSizeStep;
+    SurfaceModel surface;
     int translationStep;
-    private SurfaceModel surface;
-    private View view;
+    View view;
 
     Window3D() {
         translationStep = 50;
         squareSizeStep = 1;
         JFrame aFrame = new JFrame("Isometric 3D Test");
         surface = new RandomSurfaceModel(50, 50, 13);
-        view = new View(surface);
+        view = new View(surface, WIN_WIDTH, WIN_HEIGHT);
         int amountTranslateOriginToCenterObjectHorizontally = surface.getSquareSize() * surface.getXgridSize();
         view.setTranslateX(WIN_WIDTH / 2 - amountTranslateOriginToCenterObjectHorizontally);
         view.setTranslateY(WIN_HEIGHT / 2);
@@ -26,8 +27,8 @@ public class Window3D extends JFrame {
         JButton rightButton = createButton("Right", this::translateRight);
         JButton upButton = createButton("Up", this::translateUp);
         JButton downButton = createButton("Down", this::translateDown);
-        JButton yDecButton = createButton("Scale Down", this::scaleDown);
-        JButton yIncButton = createButton("Scale Up", this::scaleUp);
+        JButton yDecButton = createButton("Scale Down", this::adjustElevationDown);
+        JButton yIncButton = createButton("Scale Up", this::adjustElevationUp);
         JButton yInc2DButton = createButton("Rotate +", this::rotatePlus);
         JButton yDec2DButton = createButton("Rotate -", this::rotateMinus);
         JButton zoomInButton = createButton("Zoom+", this::zoomIn);
@@ -54,6 +55,16 @@ public class Window3D extends JFrame {
         new Window3D();
     }
 
+    void adjustElevationDown() {
+        view.adjustElevationScale(-elevationScaleStep);
+        debugPrintln("Drawing Panel Y Skew=" + view.elevationScalar());
+    }
+
+    void adjustElevationUp() {
+        view.adjustElevationScale(elevationScaleStep);
+        debugPrintln("Drawing Panel Y Skew=" + view.elevationScalar());
+    }
+
     JButton createButton(String name, Runnable callback) {
         JButton button = new JButton(name);
         button.addActionListener((ae) -> {
@@ -67,57 +78,45 @@ public class Window3D extends JFrame {
         if (DEBUG) System.err.println(msg);
     }
 
-    private void rotateMinus() {
+    void rotateMinus() {
         GlobalVars.ySkew -= .1f;
-        if (view.getScaleElevation() == 0.0f) GlobalVars.ySkew = 0.1f;
+        if (view.elevationScalar() == 0.0f) GlobalVars.ySkew = 0.1f;
         debugPrintln("Global Skew Y Skew=" + GlobalVars.ySkew);
     }
 
-    private void rotatePlus() {
+    void rotatePlus() {
         GlobalVars.ySkew += .1f;
-        if (view.getScaleElevation() == 0.0f) GlobalVars.ySkew = -0.1f;
+        if (view.elevationScalar() == 0.0f) GlobalVars.ySkew = -0.1f;
         debugPrintln("Global Panel Y Skew=" + GlobalVars.ySkew);
         view.repaint();
     }
 
-    private void scaleDown() {
-        view.setScaleElevation(view.getScaleElevation() - 0.1f);
-        if (view.getScaleElevation() == 0) view.setScaleElevation(-0.1f);
-        debugPrintln("Drawing Panel Y Skew=" + view.getScaleElevation());
-    }
-
-    private void scaleUp() {
-        view.setScaleElevation(view.getScaleElevation() + 0.1f);
-        if (view.getScaleElevation() == 0) view.setScaleElevation(0.1f);
-        debugPrintln("Drawing Panel Y Skew=" + view.getScaleElevation());
-    }
-
-    private void translateDown() {
-        view.incOriginY(translationStep);
+    void translateDown() {
+        view.translateDown(translationStep);
         debugPrintln("Origin Y=" + view.getTranslateY());
     }
 
-    private void translateLeft() {
+    void translateLeft() {
         view.translateLeft(translationStep);
         debugPrintln("Origin X=" + view.getTranslateX());
     }
 
-    private void translateRight() {
+    void translateRight() {
         view.translateRight(translationStep);
         debugPrintln("Origin X=" + view.getTranslateX());
     }
 
-    private void translateUp() {
+    void translateUp() {
         view.translateUp(translationStep);
         debugPrintln("Origin Y=" + view.getTranslateX());
     }
 
-    private void zoomIn() {
+    void zoomIn() {
         surface.incSquareSize(squareSizeStep);
         debugPrintln("Square Size=" + surface.getSquareSize());
     }
 
-    private void zoomOut() {
+    void zoomOut() {
         surface.decSquareSize(squareSizeStep);
         debugPrintln("Square Size=" + surface.getSquareSize());
         view.repaint();
