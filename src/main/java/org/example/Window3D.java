@@ -25,8 +25,8 @@ public class Window3D extends JFrame {
         elevationScaleStep = 0.3;
         surface = new RandomSurfaceModel(50, 50, 13);
         view = new View(surface, windowWidth, windowHeight);
-        centerObject();
         setupButtons();
+        centerObject();
         openWindow();
     }
 
