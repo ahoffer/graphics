@@ -4,11 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class View extends JPanel {
+    private final transient SurfaceModel surface;
     private final int viewHeight;
     private final int viewWidth;
     private double elevationScalar = 1.0;
-    private Graphics graphics;
-    private final SurfaceModel surface;
+    private transient Graphics graphics;
     private int translateX = 0;
     private int translateY = 0;
     private double ySkew = 0.5;
@@ -24,19 +24,19 @@ public class View extends JPanel {
     }
 
     public void adjustYskew(double value) {
-        setySkew(ySkew + value);
+        setYskew(ySkew + value);
     }
 
     private void draw(int x, int y, double ySkew) {
         Point2D point1;
         Point2D point2;
-        int courseness = surface.getSquareSize();
+        int coarseness = surface.getSquareSize();
         point1 = new Point3D(x, surface.getElevation(x, y), y)
-                .scale(courseness, elevationScalar(), courseness)
+                .scale(coarseness, elevationScalar(), coarseness)
                 .transformToIso(ySkew);
         point2 = new Point3D(
                 (x + 1), surface.getElevation(x + 1, y), y)
-                .scale(courseness, elevationScalar(), courseness)
+                .scale(coarseness, elevationScalar(), coarseness)
                 .transformToIso(ySkew);
 //System.err.println(String.format("%s %s", point1,point2));
         point1.translate(xOffset(), yOffset());
@@ -56,10 +56,11 @@ public class View extends JPanel {
         this.elevationScalar = elevationScale > 0 ? elevationScale : 0.1;
     }
 
-    public double getySkew() {
+    public double getYskew() {
         return ySkew;
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         this.graphics = g;
         g.setColor(Color.black);
@@ -67,7 +68,7 @@ public class View extends JPanel {
         graphics.setColor(Color.green);
         for (int y = 0; y < surface.getYgridSize(); y++)
             for (int x = 0; x < surface.getXgridSize() - 1; x++) {
-                draw(x, y, getySkew());
+                draw(x, y, getYskew());
 
             }
     }
@@ -80,7 +81,7 @@ public class View extends JPanel {
         this.translateY = translateY;
     }
 
-    public void setySkew(double value) {
+    public void setYskew(double value) {
         ySkew = value > 0 ? value : 0.1;
     }
 

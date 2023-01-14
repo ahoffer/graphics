@@ -4,12 +4,12 @@ import javax.swing.*;
 
 public class Window3D extends JFrame {
 
-    final JFrame frame;
+    static final JFrame frame = new JFrame("Isometric 3D Test");
     boolean DEBUG;
     double elevationScaleStep;
     int isoMode;
     int squareSizeStep;
-    SurfaceModel surface;
+    transient SurfaceModel surface;
     int translationStep;
     View view;
     int windowHeight;
@@ -25,7 +25,6 @@ public class Window3D extends JFrame {
         elevationScaleStep = 0.3;
         surface = new RandomSurfaceModel(50, 50, 13);
         view = new View(surface, windowWidth, windowHeight);
-        frame = new JFrame("Isometric 3D Test");
         centerObject();
         setupButtons();
         openWindow();
@@ -53,7 +52,7 @@ public class Window3D extends JFrame {
 
     JButton createButton(String name, Runnable callback) {
         JButton button = new JButton(name);
-        button.addActionListener((ae) -> {
+        button.addActionListener(ae -> {
             callback.run();
             view.repaint();
         });
@@ -66,18 +65,18 @@ public class Window3D extends JFrame {
 
     void decreaseYskew() {
         view.adjustYskew(-0.1);
-        debugPrintln("Y Skew=" + view.getySkew());
+        debugPrintln("Y Skew=" + view.getYskew());
     }
 
     void increaseYskew() {
         view.adjustYskew(0.1);
-        debugPrintln("Y Skew=" + view.getySkew());
+        debugPrintln("Y Skew=" + view.getYskew());
     }
 
     void openWindow() {
         frame.add(view);
         frame.setSize(windowWidth, windowHeight);
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 

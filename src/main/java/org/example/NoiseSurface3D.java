@@ -3,13 +3,15 @@ package org.example;
 public class NoiseSurface3D {
     PerlinNoise perlinNoise = new PerlinNoise(3);
     int[][] surfaceElevations = null;
-    int xGridSize, yGridSize;
+    int xGridSize;
+    int yGridSize;
 
     NoiseSurface3D(int xGridSize, int yGridSize, int nRandomHeights, int minHeight, int maxHeight) {
         this.xGridSize = xGridSize;
         this.yGridSize = yGridSize;
         surfaceElevations = new int[xGridSize][yGridSize];
-        int randomX, randomY = 0;
+        int randomX;
+        int randomY;
         for (int i = 0; i < nRandomHeights; i++) {
             randomX = (int) (Math.random() * (xGridSize - 2) + 1);//-2 leaves 0's in outsize edge points
             randomY = (int) (Math.random() * (yGridSize - 2) + 1);

@@ -15,11 +15,6 @@ public class Point2D {
 //        return this;
 //    }
 
-    public Point2D scaleY(double yScalar) {
-        this.y *= yScalar;
-        return this;
-    }
-
     @Override
     public String toString() {
         return String.format("(%.2f,%.2f)", x, y);
