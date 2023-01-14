@@ -6,9 +6,9 @@ import java.awt.*;
 public class View extends JPanel {
     private final int viewHeight;
     private final int viewWidth;
-    SurfaceModel surface;
     private double elevationScalar = 1.0;
     private Graphics graphics;
+    private SurfaceModel surface;
     private int translateX = 0;
     private int translateY = 0;
     private double ySkew = 0.5;
@@ -31,9 +31,20 @@ public class View extends JPanel {
         Point2D point1;
         Point2D point2;
         int courseness = surface.getSquareSize();
-        point1 = new Point3D(x * courseness, (int) (surface.getElevation(x, y) * elevationScalar()), y * courseness).transformToIso(ySkew);
-        point2 = new Point3D((x + 1) * courseness, (int) (surface.getElevation(x + 1, y) * elevationScalar()), y * courseness).transformToIso(ySkew);
-        graphics.drawLine(point1.x + getTranslateX(), point1.y + getTranslateY(), point2.x + getTranslateX(), point2.y + getTranslateY());
+        point1 = new Point3D(
+                x * courseness,
+                surface.getElevation(x, y) * elevationScalar(),
+                y * courseness).transformToIso().scaleY(ySkew).translateX(xOffset());
+        point2 = new Point3D(
+                (x + 1) * courseness,
+                surface.getElevation(x + 1, y) * elevationScalar(),
+                y * courseness).transformToIso().scaleY(y);
+System.err.println(String.format("%s %s", point1,point2));
+        graphics.drawLine(
+                (int) point1.translateX(xOffset()).x,
+                (int) point1.translateY(yOffset()).y,
+                (int) point2.translateX(xOffset()).x,
+                (int) point2.translateY(yOffset()).y);
     }
 
     public double elevationScalar() {
@@ -44,11 +55,11 @@ public class View extends JPanel {
         this.elevationScalar = elevationScale > 0 ? elevationScale : 0.1;
     }
 
-    public int getTranslateX() {
+    public int xOffset() {
         return translateX;
     }
 
-    public int getTranslateY() {
+    public int yOffset() {
         return translateY;
     }
 
@@ -82,19 +93,19 @@ public class View extends JPanel {
 
     public void translateDown(int value) {
         //Screen coords. Y-axis points down
-        setTranslateY(getTranslateY() + value);
+        setTranslateY(yOffset() + value);
     }
 
     public void translateLeft(int value) {
-        setTranslateX(getTranslateX() - value);
+        setTranslateX(xOffset() - value);
     }
 
     public void translateRight(int value) {
-        setTranslateX(getTranslateX() + value);
+        setTranslateX(xOffset() + value);
     }
 
     public void translateUp(int value) {
         //Screen coords. Y-axis points down
-        setTranslateY(getTranslateY() - value);
+        setTranslateY(yOffset() - value);
     }
 }

@@ -106,22 +106,22 @@ public class Window3D extends JFrame {
 
     void translateDown() {
         view.translateDown(translationStep);
-        debugPrintln("Origin Y=" + view.getTranslateY());
+        debugPrintln("Origin Y=" + view.yOffset());
     }
 
     void translateLeft() {
         view.translateLeft(translationStep);
-        debugPrintln("Origin X=" + view.getTranslateX());
+        debugPrintln("Origin X=" + view.xOffset());
     }
 
     void translateRight() {
         view.translateRight(translationStep);
-        debugPrintln("Origin X=" + view.getTranslateX());
+        debugPrintln("Origin X=" + view.xOffset());
     }
 
     void translateUp() {
         view.translateUp(translationStep);
-        debugPrintln("Origin Y=" + view.getTranslateX());
+        debugPrintln("Origin Y=" + view.xOffset());
     }
 
     void zoomIn() {
