@@ -14,6 +14,7 @@ public class Window3D extends JFrame {
     View view;
     int windowHeight;
     int windowWidth;
+     double ySkewStep;
 
     Window3D() {
         isoMode = 1;
@@ -23,6 +24,7 @@ public class Window3D extends JFrame {
         translationStep = 50;
         squareSizeStep = 1;
         elevationScaleStep = 0.3;
+        ySkewStep = 0.05;
         surface = new RandomSurfaceModel(50, 50, 13);
         view = new View(surface, windowWidth, windowHeight);
         setupButtons();
@@ -36,12 +38,10 @@ public class Window3D extends JFrame {
 
     void adjustElevationDown() {
         view.adjustElevationScale(-elevationScaleStep);
-        debugPrintln("Elevation Scalar=" + view.elevationScalar());
     }
 
     void adjustElevationUp() {
         view.adjustElevationScale(elevationScaleStep);
-        debugPrintln("Elevation Scalar=" + view.elevationScalar());
     }
 
     void centerObject() {
@@ -50,27 +50,30 @@ public class Window3D extends JFrame {
         view.setTranslateY(windowHeight / 2);
     }
 
-    JButton createButton(String name, Runnable callback) {
+    JButton createButton(String name, Runnable callback, Object debugMsg) {
         JButton button = new JButton(name);
         button.addActionListener(ae -> {
             callback.run();
             view.repaint();
+            debugPrintln(debugMsg);
         });
         return button;
     }
 
     void debugPrintln(Object msg) {
-        if (DEBUG) System.err.println(msg);
+        // Ignore nulls and empty Strings
+        if (msg == null || msg instanceof String && !((String) msg).isBlank()) {
+            return;
+        }
+        System.err.println(msg);
     }
 
     void decreaseYskew() {
-        view.adjustYskew(-0.1);
-        debugPrintln("Y Skew=" + view.getYskew());
+        view.adjustYskew(-ySkewStep);
     }
 
     void increaseYskew() {
-        view.adjustYskew(0.1);
-        debugPrintln("Y Skew=" + view.getYskew());
+        view.adjustYskew(ySkewStep);
     }
 
     void openWindow() {
@@ -81,46 +84,39 @@ public class Window3D extends JFrame {
     }
 
     void setupButtons() {
-        view.add(createButton("Left", this::translateLeft));
-        view.add(createButton("Right", this::translateRight));
-        view.add(createButton("Up", this::translateUp));
-        view.add(createButton("Down", this::translateDown));
-        view.add(createButton("Elevation -", this::adjustElevationDown));
-        view.add(createButton("Elevation +", this::adjustElevationUp));
-        view.add(createButton("Y Skew -", this::decreaseYskew));
-        view.add(createButton("Y Skew +", this::increaseYskew));
-        view.add(createButton("Zoom-", this::zoomOut));
-        view.add(createButton("Zoom+", this::zoomIn));
+        view.add(createButton("Left", this::translateLeft, "Origin X=" + view.xOffset()));
+        view.add(createButton("Right", this::translateRight, "Origin X=" + view.xOffset()));
+        view.add(createButton("Up", this::translateUp, "Origin Y=" + view.xOffset()));
+        view.add(createButton("Down", this::translateDown, "Origin Y=" + view.yOffset()));
+        view.add(createButton("Elevation -", this::adjustElevationDown, "Elevation Scalar=" + view.elevationScalar()));
+        view.add(createButton("Elevation +", this::adjustElevationUp, "Elevation Scalar=" + view.elevationScalar()));
+        view.add(createButton("Y Skew -", this::decreaseYskew, "Y Skew=" + view.getYskew()));
+        view.add(createButton("Y Skew +", this::increaseYskew, "Y Skew=" + view.getYskew()));
+        view.add(createButton("Zoom-", this::zoomOut, "Square Size=" + surface.getSquareSize()));
+        view.add(createButton("Zoom+", this::zoomIn, "Square Size=" + surface.getSquareSize()));
     }
 
     void translateDown() {
         view.translateDown(translationStep);
-        debugPrintln("Origin Y=" + view.yOffset());
     }
 
     void translateLeft() {
         view.translateLeft(translationStep);
-        debugPrintln("Origin X=" + view.xOffset());
     }
 
     void translateRight() {
         view.translateRight(translationStep);
-        debugPrintln("Origin X=" + view.xOffset());
     }
 
     void translateUp() {
         view.translateUp(translationStep);
-        debugPrintln("Origin Y=" + view.xOffset());
     }
 
     void zoomIn() {
         surface.incSquareSize(squareSizeStep);
-        debugPrintln("Square Size=" + surface.getSquareSize());
     }
 
     void zoomOut() {
         surface.decSquareSize(squareSizeStep);
-        debugPrintln("Square Size=" + surface.getSquareSize());
-        view.repaint();
     }
 }
