@@ -8,7 +8,7 @@ public class View extends JPanel {
     private final int viewWidth;
     private double elevationScalar = 1.0;
     private Graphics graphics;
-    private SurfaceModel surface;
+    private final SurfaceModel surface;
     private int translateX = 0;
     private int translateY = 0;
     private double ySkew = 0.5;
@@ -31,20 +31,21 @@ public class View extends JPanel {
         Point2D point1;
         Point2D point2;
         int courseness = surface.getSquareSize();
-        point1 = new Point3D(
-                x * courseness,
-                surface.getElevation(x, y) * elevationScalar(),
-                y * courseness).transformToIso().scaleY(ySkew).translateX(xOffset());
+        point1 = new Point3D(x, surface.getElevation(x, y), y)
+                .scale(courseness, elevationScalar(), courseness)
+                .transformToIso(ySkew);
         point2 = new Point3D(
-                (x + 1) * courseness,
-                surface.getElevation(x + 1, y) * elevationScalar(),
-                y * courseness).transformToIso().scaleY(y);
-System.err.println(String.format("%s %s", point1,point2));
+                (x + 1), surface.getElevation(x + 1, y), y)
+                .scale(courseness, elevationScalar(), courseness)
+                .transformToIso(ySkew);
+//System.err.println(String.format("%s %s", point1,point2));
+        point1.translate(xOffset(), yOffset());
+        point2.translate(xOffset(), yOffset());
         graphics.drawLine(
-                (int) point1.translateX(xOffset()).x,
-                (int) point1.translateY(yOffset()).y,
-                (int) point2.translateX(xOffset()).x,
-                (int) point2.translateY(yOffset()).y);
+                (int) point1.x,
+                (int) point1.y,
+                (int) point2.x,
+                (int) point2.y);
     }
 
     public double elevationScalar() {
@@ -53,14 +54,6 @@ System.err.println(String.format("%s %s", point1,point2));
 
     public void elevationScalar(double elevationScale) {
         this.elevationScalar = elevationScale > 0 ? elevationScale : 0.1;
-    }
-
-    public int xOffset() {
-        return translateX;
-    }
-
-    public int yOffset() {
-        return translateY;
     }
 
     public double getySkew() {
@@ -88,7 +81,7 @@ System.err.println(String.format("%s %s", point1,point2));
     }
 
     public void setySkew(double value) {
-        ySkew = value > 0 ? 0.1 : value;
+        ySkew = value > 0 ? value : 0.1;
     }
 
     public void translateDown(int value) {
@@ -107,5 +100,13 @@ System.err.println(String.format("%s %s", point1,point2));
     public void translateUp(int value) {
         //Screen coords. Y-axis points down
         setTranslateY(yOffset() - value);
+    }
+
+    public int xOffset() {
+        return translateX;
+    }
+
+    public int yOffset() {
+        return translateY;
     }
 }

@@ -11,8 +11,10 @@ public class Point3D {
         this.z = z;
     }
 
-    public Point3D scaleX(double xScalar) {
+    public Point3D scale(double xScalar, double yScalar, double zScalar) {
         this.x *= xScalar;
+        this.y *= yScalar;
+        this.z *= zScalar;
         return this;
     }
 
@@ -21,11 +23,11 @@ public class Point3D {
         return String.format("(%.2f,%.2f,%.2f)", x, y, z);
     }
 
-    public Point2D transformToIso() {
+    public Point2D transformToIso(double ySkew) {
         //            case LEFT_ISO:
         //                return new Point2D(x + z, (int) (((-y) + z) * GlobalVars.ySkew));
         // if (GlobalVars.mode == CENTER_ISO) {
-        return new Point2D(x + z, ((-y) + z - x) );
+        return new Point2D(x + z, (int) (((-y) + z - x) * ySkew));
 //            case RIGHT_ISO:
 //                return new Point2D(x - z, (int) (((-y) + z) * GlobalVars.ySkew));
         //   }

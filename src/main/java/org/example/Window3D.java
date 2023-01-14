@@ -37,12 +37,12 @@ public class Window3D extends JFrame {
 
     void adjustElevationDown() {
         view.adjustElevationScale(-elevationScaleStep);
-        debugPrintln("Drawing Panel Y Skew=" + view.elevationScalar());
+        debugPrintln("Elevation Scalar=" + view.elevationScalar());
     }
 
     void adjustElevationUp() {
         view.adjustElevationScale(elevationScaleStep);
-        debugPrintln("Drawing Panel Y Skew=" + view.elevationScalar());
+        debugPrintln("Elevation Scalar=" + view.elevationScalar());
     }
 
     void centerObject() {
@@ -64,44 +64,34 @@ public class Window3D extends JFrame {
         if (DEBUG) System.err.println(msg);
     }
 
+    void decreaseYskew() {
+        view.adjustYskew(-0.1);
+        debugPrintln("Y Skew=" + view.getySkew());
+    }
+
+    void increaseYskew() {
+        view.adjustYskew(0.1);
+        debugPrintln("Y Skew=" + view.getySkew());
+    }
+
     void openWindow() {
+        frame.add(view);
         frame.setSize(windowWidth, windowHeight);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 
-    void rotateMinus() {
-        view.adjustYskew(0.1);
-        debugPrintln("Global Skew Y Skew=" + view.getySkew());
-    }
-
-    void rotatePlus() {
-        view.adjustYskew(0.1);
-        debugPrintln("Global Panel Y Skew=" + view.getySkew());
-    }
-
     void setupButtons() {
-        JButton leftButton = createButton("Left", this::translateLeft);
-        JButton rightButton = createButton("Right", this::translateRight);
-        JButton upButton = createButton("Up", this::translateUp);
-        JButton downButton = createButton("Down", this::translateDown);
-        JButton yDecButton = createButton("Scale Down", this::adjustElevationDown);
-        JButton yIncButton = createButton("Scale Up", this::adjustElevationUp);
-        JButton yInc2DButton = createButton("Rotate +", this::rotatePlus);
-        JButton yDec2DButton = createButton("Rotate -", this::rotateMinus);
-        JButton zoomInButton = createButton("Zoom+", this::zoomIn);
-        JButton zoomOutButton = createButton("Zoom-", this::zoomOut);
-        view.add(leftButton);
-        view.add(rightButton);
-        view.add(upButton);
-        view.add(downButton);
-        view.add(yDecButton);
-        view.add(yIncButton);
-        view.add(yDec2DButton);
-        view.add(yInc2DButton);
-        view.add(zoomOutButton);
-        view.add(zoomInButton);
-        frame.add(view);
+        view.add(createButton("Left", this::translateLeft));
+        view.add(createButton("Right", this::translateRight));
+        view.add(createButton("Up", this::translateUp));
+        view.add(createButton("Down", this::translateDown));
+        view.add(createButton("Scale DownY", this::adjustElevationDown));
+        view.add(createButton("Scale Up", this::adjustElevationUp));
+        view.add(createButton("Y Skew -", this::decreaseYskew));
+        view.add(createButton("Y Skew +", this::increaseYskew));
+        view.add(createButton("Zoom-", this::zoomOut));
+        view.add(createButton("Zoom+", this::zoomIn));
     }
 
     void translateDown() {

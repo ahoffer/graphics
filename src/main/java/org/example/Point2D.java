@@ -15,7 +15,7 @@ public class Point2D {
 //        return this;
 //    }
 
-    public Point2D scaleY( double yScalar ) {
+    public Point2D scaleY(double yScalar) {
         this.y *= yScalar;
         return this;
     }
@@ -25,13 +25,9 @@ public class Point2D {
         return String.format("(%.2f,%.2f)", x, y);
     }
 
-    public Point2D translateX(int value) {
-        x += value;
-        return this;
-    }
-
-    public Point2D translateY(int value) {
-        y += value;
+    public Point2D translate(int x, int y) {
+        this.x += x;
+        this.y += y;
         return this;
     }
 }
