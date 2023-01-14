@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Window3D extends JFrame {
 
-    static final JFrame frame = new JFrame("Isometric 3D Test");
+    static final JFrame frame = new JFrame(Window3D.class.getName());
     boolean DEBUG;
     double elevationScaleStep;
     int isoMode;
@@ -17,7 +17,7 @@ public class Window3D extends JFrame {
 
     Window3D() {
         isoMode = 1;
-        DEBUG = true;
+        DEBUG = false;
         windowWidth = 1024;
         windowHeight = 768;
         translationStep = 50;
@@ -85,8 +85,8 @@ public class Window3D extends JFrame {
         view.add(createButton("Right", this::translateRight));
         view.add(createButton("Up", this::translateUp));
         view.add(createButton("Down", this::translateDown));
-        view.add(createButton("Scale DownY", this::adjustElevationDown));
-        view.add(createButton("Scale Up", this::adjustElevationUp));
+        view.add(createButton("Elevation -", this::adjustElevationDown));
+        view.add(createButton("Elevation +", this::adjustElevationUp));
         view.add(createButton("Y Skew -", this::decreaseYskew));
         view.add(createButton("Y Skew +", this::increaseYskew));
         view.add(createButton("Zoom-", this::zoomOut));
