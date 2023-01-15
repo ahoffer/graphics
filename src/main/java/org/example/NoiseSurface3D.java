@@ -13,14 +13,16 @@ public class NoiseSurface3D {
         int randomX;
         int randomY;
         for (int i = 0; i < nRandomHeights; i++) {
-            randomX = (int) (Math.random() * (xGridSize - 2) + 1);//-2 leaves 0's in outsize edge points
+            randomX =
+                    (int)
+                            (Math.random() * (xGridSize - 2)
+                                    + 1); // -2 leaves 0's in outsize edge points
             randomY = (int) (Math.random() * (yGridSize - 2) + 1);
             setElevation(randomX, randomY, randomElevation(minHeight, maxHeight));
         }
         for (int i = 0; i < 2; i++) {
             for (int y = 1; y < yGridSize - 1; y++)
-                for (int x = 1; x < xGridSize - 1; x++)
-                    setElevation(x, y, average(x, y));
+                for (int x = 1; x < xGridSize - 1; x++) setElevation(x, y, average(x, y));
         }
     }
 
@@ -40,7 +42,6 @@ public class NoiseSurface3D {
     public int getElevation(int x, int y) {
         return surfaceElevations[y][x];
     }
-
 
     public int randomElevation(int minHeight, int maxHeight) {
         return (int) (Math.random() * (maxHeight - minHeight) + minHeight);

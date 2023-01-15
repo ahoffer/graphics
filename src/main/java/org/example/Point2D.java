@@ -9,11 +9,15 @@ public class Point2D {
         this.y = y;
     }
 
-//    public Point2D translate(int deltaX, int deltaY) {
-//        x += deltaX;
-//        y += deltaY;
-//        return this;
-//    }
+    public Point2D scale(int value) {
+        return scale(value, value);
+    }
+
+    public Point2D scale(int x, int y) {
+        this.x *= x;
+        this.y *= y;
+        return this;
+    }
 
     @Override
     public String toString() {

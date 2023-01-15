@@ -15,17 +15,17 @@ public class RandomSurfaceModel extends SurfaceModel {
     void computeElevations() {
         surfaceElevations = new int[getXgridSize()][getYgridSize()];
         Random random = new Random(3);
-        for (int y = 0; y < getYgridSize(); y++)
-            for (int x = 1; x < getXgridSize() - 1; x++)
-                setElevation(x, y, random.nextInt(20));
+        for (int z = 0; z < getYgridSize(); z++)
+            for (int x = 1; x < getXgridSize() - 1; x++) setElevation(x, z, random.nextInt(20));
     }
 
-    public int getElevation(int x, int y) {
-        return surfaceElevations[y][x];
+    @Override
+    public Point3D pointAt(int x, int z) {
+        // The flat plane (the grid) is X-Z, the Y axis represents height.
+        return new Point3D(x, surfaceElevations[z][x], z);
     }
 
-    public void setElevation(int x, int y, int elevation) {
-        surfaceElevations[y][x] = elevation;
+    public void setElevation(int x, int z, int elevation) {
+        surfaceElevations[z][x] = elevation;
     }
-
 }

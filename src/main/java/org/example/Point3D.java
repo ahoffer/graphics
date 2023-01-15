@@ -28,8 +28,8 @@ public class Point3D {
         //                return new Point2D(x + z, (int) (((-y) + z) * GlobalVars.ySkew));
         // if (GlobalVars.mode == CENTER_ISO) {
         return new Point2D(x + z, (int) (((-y) + z - x) * ySkew));
-//            case RIGHT_ISO:
-//                return new Point2D(x - z, (int) (((-y) + z) * GlobalVars.ySkew));
+        //            case RIGHT_ISO:
+        //                return new Point2D(x - z, (int) (((-y) + z) * GlobalVars.ySkew));
         //   }
         //  throw new RuntimeException("Invalid Transformation Mode!");
     }

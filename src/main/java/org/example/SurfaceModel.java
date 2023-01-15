@@ -5,12 +5,9 @@ public abstract class SurfaceModel {
     private int xGridSize;
     private int yGridSize;
 
-
     public void decSquareSize(int value) {
         setSquareSize(squareSize - value);
     }
-
-    public abstract int getElevation(int x, int y);
 
     public int getSquareSize() {
         return squareSize;
@@ -27,6 +24,8 @@ public abstract class SurfaceModel {
     public void incSquareSize(int value) {
         setSquareSize(getSquareSize() + value);
     }
+
+    public abstract Point3D pointAt(int x, int y);
 
     public void setSquareSize(int value) {
         squareSize = value > 0 ? value : 1;

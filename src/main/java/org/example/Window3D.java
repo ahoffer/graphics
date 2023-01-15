@@ -14,7 +14,7 @@ public class Window3D extends JFrame {
     View view;
     int windowHeight;
     int windowWidth;
-     double ySkewStep;
+    double ySkewStep;
 
     Window3D() {
         isoMode = 1;
@@ -45,18 +45,20 @@ public class Window3D extends JFrame {
     }
 
     void centerObject() {
-        int amountTranslateOriginToCenterObjectHorizontally = surface.getSquareSize() * surface.getXgridSize();
+        int amountTranslateOriginToCenterObjectHorizontally =
+                surface.getSquareSize() * surface.getXgridSize();
         view.setTranslateX(windowWidth / 2 - amountTranslateOriginToCenterObjectHorizontally);
         view.setTranslateY(windowHeight / 2);
     }
 
     JButton createButton(String name, Runnable callback, Object debugMsg) {
         JButton button = new JButton(name);
-        button.addActionListener(ae -> {
-            callback.run();
-            view.repaint();
-            debugPrintln(debugMsg);
-        });
+        button.addActionListener(
+                ae -> {
+                    callback.run();
+                    view.repaint();
+                    debugPrintln(debugMsg);
+                });
         return button;
     }
 
@@ -88,8 +90,16 @@ public class Window3D extends JFrame {
         view.add(createButton("Right", this::translateRight, "Origin X=" + view.xOffset()));
         view.add(createButton("Up", this::translateUp, "Origin Y=" + view.xOffset()));
         view.add(createButton("Down", this::translateDown, "Origin Y=" + view.yOffset()));
-        view.add(createButton("Elevation -", this::adjustElevationDown, "Elevation Scalar=" + view.elevationScalar()));
-        view.add(createButton("Elevation +", this::adjustElevationUp, "Elevation Scalar=" + view.elevationScalar()));
+        view.add(
+                createButton(
+                        "Elevation -",
+                        this::adjustElevationDown,
+                        "Elevation Scalar=" + view.elevationScalar()));
+        view.add(
+                createButton(
+                        "Elevation +",
+                        this::adjustElevationUp,
+                        "Elevation Scalar=" + view.elevationScalar()));
         view.add(createButton("Y Skew -", this::decreaseYskew, "Y Skew=" + view.getYskew()));
         view.add(createButton("Y Skew +", this::increaseYskew, "Y Skew=" + view.getYskew()));
         view.add(createButton("Zoom-", this::zoomOut, "Square Size=" + surface.getSquareSize()));

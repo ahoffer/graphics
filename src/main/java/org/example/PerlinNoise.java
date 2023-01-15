@@ -1,13 +1,10 @@
 package org.example;
 
-
 import java.util.Random;
 
 /**
- * <p>
- * Adapted from Riven's Implementation of Perlin noise. Modified it to be more
- * OOP rather than C like.
- * </p>
+ * Adapted from Riven's Implementation of Perlin noise. Modified it to be more OOP rather than C
+ * like.
  *
  * @author Matthew A. Johnston (WarmWaffles)
  */
@@ -25,22 +22,17 @@ public class PerlinNoise {
         pow = new float[32];
         perm = new int[512];
 
-
-        for (int i = 0; i < pow.length; i++)
-            pow[i] = (float) Math.pow(2, i);
+        for (int i = 0; i < pow.length; i++) pow[i] = (float) Math.pow(2, i);
 
         int[] permutation = new int[256];
 
         Random r = new Random(seed);
 
-        for (int i = 0; i < permutation.length; i++)
-            permutation[i] = r.nextInt(256);
+        for (int i = 0; i < permutation.length; i++) permutation[i] = r.nextInt(256);
 
-        if (permutation.length != 256)
-            throw new IllegalStateException();
+        if (permutation.length != 256) throw new IllegalStateException();
 
-        for (int i = 0; i < 256; i++)
-            perm[256 + i] = perm[i] = permutation[i];
+        for (int i = 0; i < 256; i++) perm[256 + i] = perm[i] = permutation[i];
     }
 
     /**
@@ -165,8 +157,7 @@ public class PerlinNoise {
      */
     public float smoothNoise(float x, float y, float z, int octaves) {
         float height = 0.0f;
-        for (int octave = 1; octave <= octaves; octave++)
-            height += noise(x, y, z, octave);
+        for (int octave = 1; octave <= octaves; octave++) height += noise(x, y, z, octave);
         return height;
     }
 
@@ -181,13 +172,9 @@ public class PerlinNoise {
         float height = 0.0f;
         for (int octave = 1; octave <= octaves; octave++) {
             float h = noise(x, y, z, octave);
-            if (h < 0.0f)
-                h *= -1.0f;
+            if (h < 0.0f) h *= -1.0f;
             height += h;
         }
         return height;
     }
-
 }
-
-

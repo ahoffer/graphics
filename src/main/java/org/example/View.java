@@ -1,7 +1,7 @@
 package org.example;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class View extends JPanel {
     private final transient SurfaceModel surface;
@@ -31,21 +31,27 @@ public class View extends JPanel {
         Point2D point1;
         Point2D point2;
         int coarseness = surface.getSquareSize();
-        point1 = new Point3D(x, surface.getElevation(x, y), y)
-                .scale(coarseness, elevationScalar(), coarseness)
-                .transformToIso(ySkew);
-        point2 = new Point3D(
-                (x + 1), surface.getElevation(x + 1, y), y)
-                .scale(coarseness, elevationScalar(), coarseness)
-                .transformToIso(ySkew);
-//System.err.println(String.format("%s %s", point1,point2));
+
+        Point3D point3D_1 = surface.pointAt(x, y).scale(coarseness, elevationScalar(), coarseness);
+        point1 = point3D_1.transformToIso(ySkew);
+        Point3D point3D_2 =
+                surface.pointAt(x + 1, y).scale(coarseness, elevationScalar(), coarseness);
+        point2 = point3D_2.transformToIso(ySkew);
+
+        /*
+               point1 = new Point3D(x, surface.getElevation(x, y), y)
+                       .scale(coarseness, elevationScalar(), coarseness)
+                       .transformToIso(ySkew);
+               point2 = new Point3D(
+                       (x + 1), surface.getElevation(x + 1, y), y)
+                       .scale(coarseness, elevationScalar(), coarseness)
+                       .transformToIso(ySkew);
+        */
+
+        // System.err.println(String.format("%s %s", point1,point2));
         point1.translate(xOffset(), yOffset());
         point2.translate(xOffset(), yOffset());
-        graphics.drawLine(
-                (int) point1.x,
-                (int) point1.y,
-                (int) point2.x,
-                (int) point2.y);
+        graphics.drawLine((int) point1.x, (int) point1.y, (int) point2.x, (int) point2.y);
     }
 
     public double elevationScalar() {
@@ -69,7 +75,6 @@ public class View extends JPanel {
         for (int y = 0; y < surface.getYgridSize(); y++)
             for (int x = 0; x < surface.getXgridSize() - 1; x++) {
                 draw(x, y, getYskew());
-
             }
     }
 
@@ -86,7 +91,7 @@ public class View extends JPanel {
     }
 
     public void translateDown(int value) {
-        //Screen coords. Y-axis points down
+        // Screen coords. Y-axis points down
         setTranslateY(yOffset() + value);
     }
 
@@ -99,7 +104,7 @@ public class View extends JPanel {
     }
 
     public void translateUp(int value) {
-        //Screen coords. Y-axis points down
+        // Screen coords. Y-axis points down
         setTranslateY(yOffset() - value);
     }
 
