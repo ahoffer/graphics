@@ -17,11 +17,11 @@ public class RandomSurfaceModel extends SurfaceModel {
         Random random = new Random(3);
         for (int z = 0; z < getYgridSize(); z++)
             for (int x = 1; x < getXgridSize() - 1; x++)
-                setPoint(new Point3D(x, random.nextInt(20), z ));
+                setPoint(new Point3D(x, random.nextInt(20), z));
     }
 
-     void setPoint(Point3D point) {
-         surfaceElevations[(int) point.z][(int) point.x] = (int) point.y;
+    void setPoint(Point3D point) {
+        surfaceElevations[(int) point.z][(int) point.x] = (int) point.y;
     }
 
     @Override

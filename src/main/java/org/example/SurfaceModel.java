@@ -1,6 +1,6 @@
 package org.example;
 
-public abstract class SurfaceModel {
+public abstract class SurfaceModel extends Model {
     private int squareSize;
     private int xGridSize;
     private int yGridSize;
@@ -29,7 +29,6 @@ public abstract class SurfaceModel {
 
     public void setSquareSize(int value) {
         squareSize = value > 0 ? value : 1;
-
     }
 
     public void setXgridSize(int value) {
