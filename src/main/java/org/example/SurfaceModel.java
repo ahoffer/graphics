@@ -29,6 +29,7 @@ public abstract class SurfaceModel {
 
     public void setSquareSize(int value) {
         squareSize = value > 0 ? value : 1;
+
     }
 
     public void setXgridSize(int value) {
